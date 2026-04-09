@@ -5,6 +5,7 @@ import csv
 filename = "demo_responses.csv"
 responses = []
 
+# Load the CSV file into a list of dictionaries
 with open(filename, newline="", encoding="utf-8") as f:
     reader = csv.DictReader(f)
     for row in reader:
@@ -17,6 +18,7 @@ def count_words(response):
     Takes a string, splits it on whitespace, and returns the word count.
     Used to measure response length across all participants.
     """
+# If the response is empty, return 0
     return len(response.split())
 
 
@@ -26,6 +28,7 @@ print("-" * 75)
 
 word_counts = []
 
+# Loop through each response and count the words
 for row in responses:
     participant = row["participant_id"]
     role = row["role"]
@@ -38,6 +41,7 @@ for row in responses:
     # Truncate the response preview for display
     if len(response) > 60:
         preview = response[:60] + "..."
+    # If the response is less than 60 characters, just use the full response
     else:
         preview = response
 
