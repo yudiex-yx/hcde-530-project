@@ -1,6 +1,6 @@
 # Week 2 — Competency 2: Code literacy and documentation
 
-Project scripts and data live in **`HCDE 530 Week 2 Project/`** (this file is at the **repo root** so it’s easy to find on GitHub).
+This file sits **next to** `demo_word_count.py`, `demo_responses.csv`, and `.cursorrules` inside **`HCDE 530 Week 2 Project/`**.
 
 ## What this artifact is for
 
@@ -60,17 +60,16 @@ The parts worth noticing for “data file literacy” are: **UTF-8 encoding**, *
 
 ## Quick verify
 
-From the **repository root** (this folder), with Python 3:
+From **`HCDE 530 Week 2 Project/`** (this folder), with Python 3:
+
+```bash
+python3 demo_word_count.py
+```
+
+If your terminal is at the **repository root** instead, run:
 
 ```bash
 python3 "HCDE 530 Week 2 Project/demo_word_count.py"
-```
-
-Or change into the project folder first:
-
-```bash
-cd "HCDE 530 Week 2 Project"
-python3 demo_word_count.py
 ```
 
 You should see a header line, one line per participant, then a short summary block at the end.
