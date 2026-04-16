@@ -3,6 +3,7 @@ from pathlib import Path
 
 # Load the survey data from a CSV file
 filename = "week3_survey_messy.csv"
+cleaned_filename = "week3_survey_cleaned.csv"
 rows = []
 NUMBER_WORDS = {
     "zero": 0,
@@ -30,15 +31,30 @@ NUMBER_WORDS = {
 
 
 def parse_experience_years(value):
-    # This cleaning function tries to turn the experience field into a number.
-    # It handles blanks, regular digits ("7"), and number words ("fifteen").
-    # If the value cannot be cleaned into a number, it returns None.
+    """Convert experience text to an integer when possible, otherwise return None."""
     text = (value or "").strip().lower()
     if not text:
         return None
     if text.isdigit():
         return int(text)
     return NUMBER_WORDS.get(text)
+
+
+def normalize_role(value):
+    """Normalize role text and return a consistent value."""
+    role_raw = (value or "").strip()
+    if not role_raw:
+        return "Unknown"
+    return " ".join(word.upper() if word.lower() == "ux" else word.title() for word in role_raw.split())
+
+
+def build_cleaned_row(row):
+    """Return one cleaned row with normalized role and experience fields."""
+    cleaned_row = dict(row)
+    cleaned_row["role"] = normalize_role(row.get("role"))
+    years = parse_experience_years(row.get("experience_years"))
+    cleaned_row["experience_years"] = "" if years is None else str(years)
+    return cleaned_row
 
 data_path = Path(__file__).resolve().parent / filename
 
@@ -55,11 +71,7 @@ role_counts = {}
 for row in rows:
     # This loop cleans role text so casing differences count as the same role.
     # It also labels missing roles as "Unknown" so blanks are tracked clearly.
-    role_raw = (row.get("role") or "").strip()
-    if not role_raw:
-        role = "Unknown"
-    else:
-        role = " ".join(word.upper() if word.lower() == "ux" else word.title() for word in role_raw.split())
+    role = normalize_role(row.get("role"))
     if role in role_counts:
         role_counts[role] += 1
     else:
@@ -101,6 +113,12 @@ print("\nTop 5 satisfaction scores:")
 for name, score in top5:
     print(f"  {name}: {score}")
 
-# Output note:
-# This script does not write to an output file.
-# It prints cleaned summary results directly to the terminal.
+cleaned_rows = [build_cleaned_row(row) for row in rows]
+cleaned_output_path = Path(__file__).resolve().parent / cleaned_filename
+
+with open(cleaned_output_path, "w", newline="", encoding="utf-8") as outfile:
+    writer = csv.DictWriter(outfile, fieldnames=rows[0].keys())
+    writer.writeheader()
+    writer.writerows(cleaned_rows)
+
+print(f"\nWrote cleaned data to: {cleaned_output_path}")
