@@ -1,0 +1,22 @@
+What I just did in Week 3 practice:
+
+1) Reorganized the buggy script into clear functions
+- Updated `week3_analysis_buggy.py` to use well-named, single-purpose functions:
+  - `parse_experience_years(value)`: converts experience text to a number when possible.
+  - `normalize_role(value)`: standardizes role names and handles missing roles.
+  - `build_cleaned_row(row)`: creates one cleaned row from one raw row.
+- Added docstrings so each function explains what it does.
+
+2) Extended the script to write cleaned data
+- Added output writing to a new CSV file:
+  - `week3_survey_cleaned.csv`
+- The script now still prints analysis results and also saves cleaned rows.
+
+3) Committed iterations with specific commit messages
+- Commit 1: `22a5dd9`
+  - "Refactor week3 analysis with single-purpose cleaning functions."
+- Commit 2: `1420142`
+  - "Add cleaned Week 3 survey CSV output."
+
+Run command:
+python3 "week 3/week3_analysis_buggy.py"
