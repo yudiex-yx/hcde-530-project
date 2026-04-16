@@ -9,7 +9,10 @@ UNKNOWN_ROLE = "UNKNOWN"
 
 
 def normalize_role(value: str | None) -> str:
-    """Normalize role values so counting is case-insensitive."""
+    # This function cleans one role value:
+    # - removes extra spaces
+    # - uses UNKNOWN if role is empty
+    # - converts text to uppercase so counting is case-insensitive
     role = (value or "").strip()
     if not role:
         return UNKNOWN_ROLE
@@ -26,6 +29,7 @@ def main() -> None:
     with open(input_path, newline="", encoding="utf-8") as infile:
         reader = csv.DictReader(infile)
         for row in reader:
+            # This loop reads each row, cleans the role value, and adds 1 to that role's count.
             normalized_role = normalize_role(row.get("role"))
             role_counts[normalized_role] += 1
 
@@ -37,6 +41,8 @@ def main() -> None:
 
     with open(output_path, "w", newline="", encoding="utf-8") as outfile:
         writer = csv.writer(outfile)
+        # The output file stores two columns: role and count.
+        # Each row in the output is one cleaned role with its total number of responses.
         writer.writerow(["role", "count"])
         writer.writerows(sorted_counts)
 
