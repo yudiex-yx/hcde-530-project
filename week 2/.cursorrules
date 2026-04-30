@@ -1,0 +1,20 @@
+Project context:
+- This repo contains a small Python data-processing script and CSV data.
+- Prefer minimal, beginner-friendly code and explanations.
+
+Coding rules:
+- Use Python 3 syntax with clear variable names.
+- Keep functions small and single-purpose.
+- Add short docstrings for non-trivial functions.
+- Handle common file/data errors with clear messages.
+- Avoid adding dependencies unless explicitly requested.
+
+Data/file handling:
+- Preserve CSV schema and row order unless asked to transform it.
+- Never fabricate data values; only derive from existing inputs.
+- Use UTF-8 text handling for file I/O.
+
+Editing behavior:
+- Make targeted changes; do not refactor unrelated code.
+- Keep comments concise and useful (no obvious comments).
+- When changing behavior, include a quick way to verify (example command or expected output).
